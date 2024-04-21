@@ -4,4 +4,6 @@ from dotenv import load_dotenv
 load_dotenv(".env")
 
 TOKEN = os.getenv("TOKEN")
-ADMINS = []
+ADMINS = [5553781606]
+FROM_GROUP_ID = -4181181559
+TO_GROUP_ID = -4123054493
