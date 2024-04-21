@@ -4,13 +4,16 @@ import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
+from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.enums import ParseMode
 
 from data.config import TOKEN
 from handlers.users import user_router
 from utils.db_api.connect import start_up
+from utils.db_api.orm import TaxiDB
 
-dp = Dispatcher()
+dp = Dispatcher(storage=MemoryStorage())
+db = TaxiDB()
 
 
 async def main() -> None:

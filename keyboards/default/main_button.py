@@ -3,9 +3,9 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 start_button = ReplyKeyboardMarkup(
     keyboard=[[
-        KeyboardButton(text="Habar yuborish"),
-        KeyboardButton(text="Taxilar ro'yhati"),
-        KeyboardButton(text="Hozirda mavjuda taxilar")
+        KeyboardButton(text="E'lon yuborish ✈️"),
+        KeyboardButton(text="Barcha Taxilar 🚕"),
+        KeyboardButton(text="Top Taxilar 🏆")
     ]],
     one_time_keyboard=True,
     resize_keyboard=True
