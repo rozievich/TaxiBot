@@ -21,3 +21,25 @@ admin_button = ReplyKeyboardMarkup(
     one_time_keyboard=True,
     resize_keyboard=True,
 )
+
+
+exit_button = ReplyKeyboardMarkup(
+    keyboard=[[
+        KeyboardButton(text="❌")
+    ]],
+    one_time_keyboard=True,
+    resize_keyboard=True
+)
+
+
+exit_and_skip_button = ReplyKeyboardMarkup(
+    keyboard=[[
+        KeyboardButton(text="❌"),
+    ],
+    [
+        KeyboardButton(text="⛓ O'tkazib yuborish ⛓")
+    ]
+    ],
+    one_time_keyboard=True,
+    resize_keyboard=True,
+)

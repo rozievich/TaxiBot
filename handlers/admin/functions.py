@@ -13,7 +13,7 @@ async def add_taxi_function(message: types.Message, state: FSMContext):
 async def add_taxi_function_phone(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         await state.update_data(fullname=message.text)
-        await message.answer("Telefon raqamni kiriting: ")
+        await message.answer("Telefon raqamni kiriting:\nMisol uchun: +998 XX XXX XXXX ")
         await state.set_state(AddTaxiState.phone)
 
 
