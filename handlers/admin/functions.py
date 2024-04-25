@@ -81,11 +81,9 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
         if message.text == "❌":
             await message.answer("Jarayon tugatildi 🛑", reply_markup=admin_button)
             await state.clear()
-        elif message.text == "⛓ O'tkazib yuborish ⛓":
-            await state.update_data(description="")
+        else:
             user_info = state.get_data()
             await message.answer_photo(photo=user_info['photo'], caption=f"<b>Ism Familiya:</b> {user_info['fullname']}\n\n<b>Ma'lumotlari:</b> {message.text}\n<b>Telefon:</b> {user_info['phone']}")
-        user_info = await state.get_data()
-        await message.answer("Barchasi to'g'rimi")
+            await message.answer("Barchasi to'g'rimi")
         await state.clear()
 
