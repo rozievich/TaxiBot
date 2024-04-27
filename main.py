@@ -9,6 +9,7 @@ from aiogram.enums import ParseMode
 
 from data.config import TOKEN
 from handlers.users import user_router
+from handlers.admin import admin_router
 from utils.db_api.connect import start_up
 from utils.db_api.orm import TaxiDB
 
@@ -18,7 +19,8 @@ db = TaxiDB()
 
 async def main() -> None:
     dp.include_routers(
-        user_router
+        user_router,
+        admin_router
     )
     dp.startup.register(start_up)
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))

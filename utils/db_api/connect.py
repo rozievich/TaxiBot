@@ -23,7 +23,7 @@ async def start_up():
     taxis = """
         CREATE TABLE IF NOT EXISTS taxis(
             id BIGSERIAL PRIMARY KEY,
-            fullname VARCHAR(128) NOT NULL,
+            fullname VARCHAR(128) NOT NULL UNIQUE,
             phone VARCHAR(32) NOT NULL,
             username VARCHAR(40),
             description TEXT,

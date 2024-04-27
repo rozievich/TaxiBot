@@ -87,3 +87,4 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             await message.answer("Barchasi to'g'rimi")
         await state.clear()
 
+

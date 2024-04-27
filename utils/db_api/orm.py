@@ -27,9 +27,9 @@ class TaxiDB:
         self.cur.execute(query, (fullname, phone, username, description, photo, top))
         self.con.commit()
     
-    def get_taxi(self, phone: str):
-        query = "SELECT * FROM taxis WHERE phone = %s"
-        self.cur.execute(query, (phone, ))
+    def get_taxi(self, fullname: str):
+        query = "SELECT * FROM taxis WHERE fullname = %s"
+        self.cur.execute(query, (fullname, ))
         return self.cur.fetchone()
 
     def get_taxies(self):
