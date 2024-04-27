@@ -10,7 +10,7 @@ from main import db
 
 async def delete_taxi_function_fullname(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
-        await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=)
+        await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=admin_button)
         await state.set_state(DeleteTaxiState.fullname)
     
 
