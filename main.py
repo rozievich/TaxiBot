@@ -7,8 +7,9 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.enums import ParseMode
 
+import handlers, filters, states, utils
 from data.config import TOKEN
-from handlers.users import user_router
+# from handlers.users import users_router
 from handlers.admin import admin_router
 from utils.db_api.connect import start_up
 from utils.db_api.orm import TaxiDB
@@ -19,7 +20,7 @@ db = TaxiDB()
 
 async def main() -> None:
     dp.include_routers(
-        user_router,
+        # users_router,
         admin_router
     )
     dp.startup.register(start_up)

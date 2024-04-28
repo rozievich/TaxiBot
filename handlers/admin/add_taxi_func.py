@@ -1,18 +1,24 @@
 import re
-from aiogram import types
+from aiogram import types, Router
 from aiogram.fsm.context import FSMContext
+from aiogram.filters import and_f
+
 from data.config import ADMINS, DEFAULT_IMAGE
 from states.admin_states import AddTaxiState
 from keyboards.default.main_button import exit_button, admin_button, exit_and_skip_button
+from filters.admin_filter import TextFilter
+
+taxirouter = Router()
 
 
-
+@taxirouter.message(TextFilter("Taxi Qo'shish 🚕"))
 async def add_taxi_function(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         await message.answer("Taxining Ism Familiyasini kiriting 👤", reply_markup=exit_button)
         await state.set_state(AddTaxiState.fullname)
 
 
+@taxirouter.message(AddTaxiState.fullname)
 async def add_taxi_function_phone(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
@@ -24,6 +30,7 @@ async def add_taxi_function_phone(message: types.Message, state: FSMContext):
             await state.set_state(AddTaxiState.phone)
 
 
+@taxirouter.message(AddTaxiState.phone)
 async def add_taxi_function_photo(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
@@ -38,6 +45,7 @@ async def add_taxi_function_photo(message: types.Message, state: FSMContext):
                 await message.answer("Iltimos telefon raqamni to'g'ri kiriting ⚠️\nMisol uchun: +998901234567")
 
 
+@taxirouter.message(and_f(AddTaxiState.photo, types.ContentType.PHOTO))
 async def add_taxi_function_username(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
@@ -56,6 +64,7 @@ async def add_taxi_function_username(message: types.Message, state: FSMContext):
                 await message.answer("Iltimos Rasm kiritayotganingizga ishonch hosil qiling 🚫")
 
 
+@taxirouter.message(AddTaxiState.username)
 async def add_taxi_function_description(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
@@ -75,7 +84,7 @@ async def add_taxi_function_description(message: types.Message, state: FSMContex
                 await message.answer("Iltimos usernameni to'gri kiriting 🆘")
 
 
-
+@taxirouter.message(AddTaxiState.description)
 async def add_taxi_function_finish(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
@@ -86,5 +95,3 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             await message.answer_photo(photo=user_info['photo'], caption=f"<b>Ism Familiya:</b> {user_info['fullname']}\n\n<b>Ma'lumotlari:</b> {message.text}\n<b>Telefon:</b> {user_info['phone']}")
             await message.answer("Barchasi to'g'rimi")
         await state.clear()
-
-
