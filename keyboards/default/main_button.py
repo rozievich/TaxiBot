@@ -4,9 +4,12 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 start_button = ReplyKeyboardMarkup(
     keyboard=[[
         KeyboardButton(text="E'lon yuborish ✈️"),
-        KeyboardButton(text="Barcha Taxilar 🚕"),
+        KeyboardButton(text="Barcha Taxilar 🚕")
+    ],
+    [
         KeyboardButton(text="Top Taxilar 🏆")
-    ]],
+    ]
+    ],
     one_time_keyboard=True,
     resize_keyboard=True
 )
@@ -15,9 +18,16 @@ start_button = ReplyKeyboardMarkup(
 admin_button = ReplyKeyboardMarkup(
     keyboard=[[
         KeyboardButton(text="Taxi Qo'shish 🚕"),
-        KeyboardButton(text="Taxi O'chirish 🚖"),
+        KeyboardButton(text="Taxi O'chirish 🚖")
+    ],
+    [
         KeyboardButton(text="Statistika 📊")
-    ]],
+    ],
+    [
+        KeyboardButton(text="Topga chiqarish 🏆"),
+        KeyboardButton(text="Topdan chiqarish 🔙")
+    ]
+    ],
     one_time_keyboard=True,
     resize_keyboard=True,
 )

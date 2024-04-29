@@ -1,14 +1,16 @@
 import re
 from aiogram import types, Router
 from aiogram.fsm.context import FSMContext
-from aiogram.filters import and_f
 
 from data.config import ADMINS
 from states.admin_states import AddTaxiState
 from keyboards.default.main_button import exit_button, admin_button, exit_and_skip_button
 from filters.admin_filter import TextFilter
+from utils.db_api.orm import TaxiDB
+
 
 taxirouter = Router()
+db = TaxiDB()
 
 
 @taxirouter.message(TextFilter("Taxi Qo'shish 🚕"))
@@ -88,7 +90,10 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             await state.clear()
         else:
             user_info = await state.get_data()
-            
-            await message.answer_photo(photo=user_info['photo'], caption=f"<b>Ism Familiya:</b> {user_info['fullname']}\n\n<b>Ma'lumotlari:</b> {message.text}\n<b>Telefon:</b> {user_info['phone']}")
-            await message.answer("Barchasi to'g'rimi")
-        await state.clear()
+            try:
+                db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], user_info['description'], user_info['username'])
+            except:
+                await message.answer("Taxini kiritishda noma'lum xatolik yuzaga keldi 😕", reply_markup=admin_button)
+            else:
+                await message.answer("Taxi muvaffaqiyatli ro'yhatdan o'tkazildi ✅", reply_markup=admin_button)
+            await state.clear()

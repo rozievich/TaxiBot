@@ -16,3 +16,7 @@ class DeleteTaxiState(StatesGroup):
 
 class UpdateTopState(StatesGroup):
     fullname = State()
+
+
+class UpdateBackTopState(StatesGroup):
+    fullname = State()
