@@ -5,20 +5,20 @@ from data.config import ADMINS
 from states.admin_states import DeleteTaxiState
 from keyboards.default.main_button import admin_button 
 from utils.db_api.orm import TaxiDB
-from .add_taxi_func import taxirouter
+from .first_commans import mainrouter
 
 db = TaxiDB()
 
 
 
-@taxirouter.message(lambda msg: msg.text == "Taxi O'chirish 🚖")
+@mainrouter.message(lambda msg: msg.text == "Taxi O'chirish 🚖")
 async def delete_taxi_function_fullname(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=admin_button)
         await state.set_state(DeleteTaxiState.fullname)
     
 
-@taxirouter.message(DeleteTaxiState.fullname)
+@mainrouter.message(DeleteTaxiState.fullname)
 async def delete_taxi_function_finish(message: types.Message, state: FSMContext):
     if message.from_user in ADMINS:
         if message.text == "❌":
