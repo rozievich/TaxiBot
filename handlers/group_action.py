@@ -1,6 +1,6 @@
 from aiogram import Bot, types
 from data.config import FROM_GROUP_ID, TO_GROUP_ID
-from .first_commans import users_router
+from .first_commans import mainrouter
 
 
 async def forward_message_to_small_group(message: types.Message, bot: Bot):
@@ -11,7 +11,7 @@ async def forward_message_to_small_group(message: types.Message, bot: Bot):
         pass
 
 
-@users_router.message()
+@mainrouter.message()
 async def handle_big_group_messages(message: types.Message, bot: Bot):
     if message.chat.type == "group":
         await forward_message_to_small_group(message, bot)

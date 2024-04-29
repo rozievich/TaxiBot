@@ -3,7 +3,7 @@ from aiogram import types, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import and_f
 
-from data.config import ADMINS, DEFAULT_IMAGE
+from data.config import ADMINS
 from states.admin_states import AddTaxiState
 from keyboards.default.main_button import exit_button, admin_button, exit_and_skip_button
 from filters.admin_filter import TextFilter
@@ -37,27 +37,23 @@ async def add_taxi_function_photo(message: types.Message, state: FSMContext):
             await message.answer("Jarayon tugatildi 🛑", reply_markup=admin_button)
             await state.clear()
         else:
-            if re.match("^(\+998|998|0)?[1-9]\d{8}$", message.text):
+            if re.match(r"^(\+998|998|0)?[1-9]\d{8}$", message.text):
                 await state.update_data(phone=message.text)
-                await message.answer("Taxining Rasmini kiriting (Ixtiyoriy) 📸", reply_markup=exit_and_skip_button)
+                await message.answer("Taxining Rasmini kiriting 📸", reply_markup=exit_button)
                 await state.set_state(AddTaxiState.photo)
             else:
                 await message.answer("Iltimos telefon raqamni to'g'ri kiriting ⚠️\nMisol uchun: +998901234567")
 
 
-@taxirouter.message(and_f(AddTaxiState.photo, types.ContentType.PHOTO))
+@taxirouter.message(AddTaxiState.photo)
 async def add_taxi_function_username(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         if message.text == "❌":
             await message.answer("Jarayon tugatildi 🛑", reply_markup=admin_button)
             await state.clear()
-        elif message.text == "⛓ O'tkazib yuborish ⛓":
-            await state.update_data(photo=DEFAULT_IMAGE)
-            await message.answer("Taxining Telegram Usernameni kiriting (Ixtiyoriy) 🔗\nMisol uchun: <b>@username</b>", reply_markup=exit_and_skip_button)
-            await state.set_state(AddTaxiState.username)
         else:
             try:
-                await state.update_data(photo=message.photo.file_id)
+                await state.update_data(photo=message.photo[-1].file_id)
                 await message.answer("Taxining Telegram Usernameni kiriting (Ixtiyoriy) 🔗\nMisol uchun: <b>@username</b>", reply_markup=exit_and_skip_button)
                 await state.set_state(AddTaxiState.username)
             except:
@@ -76,7 +72,7 @@ async def add_taxi_function_description(message: types.Message, state: FSMContex
             await message.answer("Taxining xususiyatlarini kiriting (Ixtiyoriy) ⚙️", reply_markup=exit_and_skip_button)
             await state.set_state(AddTaxiState.description)
         else:
-            if re.match("^@[A-Za-z0-9_]{5,32}$", message.text): 
+            if re.match(r"^@[A-Za-z0-9_]{5,32}$", message.text): 
                 await state.update_data(username=message.text)
                 await message.answer("Taxining xususiyatlarini kiriting (Ixtiyoriy) ⚙️", reply_markup=exit_and_skip_button)
                 await state.set_state(AddTaxiState.description)
@@ -91,7 +87,8 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             await message.answer("Jarayon tugatildi 🛑", reply_markup=admin_button)
             await state.clear()
         else:
-            user_info = state.get_data()
+            user_info = await state.get_data()
+            
             await message.answer_photo(photo=user_info['photo'], caption=f"<b>Ism Familiya:</b> {user_info['fullname']}\n\n<b>Ma'lumotlari:</b> {message.text}\n<b>Telefon:</b> {user_info['phone']}")
             await message.answer("Barchasi to'g'rimi")
         await state.clear()
