@@ -6,7 +6,6 @@ from data.config import TO_GROUP_ID
 from keyboards.default.main_button import exit_button, start_button
 from filters.admin_filter import TextFilter
 from .first_commans import mainrouter
-from data.config import ADMINS
 
 
 @mainrouter.message(TextFilter("E'lon yuborish ✈️"))

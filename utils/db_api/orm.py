@@ -47,8 +47,8 @@ class TaxiDB:
         self.cur.execute(query)
         self.cur.fetchall()
     
-    def update_top_taxi(self, id: int, top: bool):
+    def update_top_taxi(self, _id: int, top: bool):
         query = "UPDATE taxis SET top = %s WHERE id = %s"
-        self.cur.execute(query, (top, id))
+        self.cur.execute(query, (top, _id))
         self.con.commit()
     

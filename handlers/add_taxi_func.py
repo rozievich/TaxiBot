@@ -54,7 +54,7 @@ async def add_taxi_function_username(message: types.Message, state: FSMContext):
             await state.clear()
         else:
             try:
-                await state.update_data(photo=message.photo[-1].file_id)
+                await state.update_data(photo=message.photo[0].file_id)
                 await message.answer("Taxining Telegram Usernameni kiriting (Ixtiyoriy) 🔗\nMisol uchun: <b>@username</b>", reply_markup=exit_and_skip_button)
                 await state.set_state(AddTaxiState.username)
             except:
@@ -90,6 +90,7 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
         else:
             user_info = await state.get_data()
             try:
+                await message.answer_photo(photo=user_info['photo'])
                 db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], message.text, user_info['username'])
             except:
                 await message.answer("Taxini kiritishda noma'lum xatolik yuzaga keldi 😕", reply_markup=admin_button)

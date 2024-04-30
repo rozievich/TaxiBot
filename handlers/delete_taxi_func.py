@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 
 from data.config import ADMINS 
 from states.admin_states import DeleteTaxiState
-from keyboards.default.main_button import admin_button, exit_button
+from keyboards.default.main_button import admin_button, get_all_users_button
 from utils.db_api.orm import TaxiDB
 from .first_commans import mainrouter
 
@@ -14,8 +14,13 @@ db = TaxiDB()
 @mainrouter.message(lambda msg: msg.text == "Taxi O'chirish 🚖")
 async def delete_taxi_function_fullname(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
-        await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=exit_button)
-        await state.set_state(DeleteTaxiState.fullname)
+        users = db.get_taxies()
+        if users:
+            print(users)
+            await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=await get_all_users_button(users))
+            await state.set_state(DeleteTaxiState.fullname)
+        else:
+            await message.answer("O'chirish uchun taxi topilmadi 🛑")
     
 
 @mainrouter.message(DeleteTaxiState.fullname)

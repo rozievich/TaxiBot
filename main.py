@@ -22,7 +22,7 @@ async def main() -> None:
     )
     dp.startup.register(start_up)
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    await dp.start_polling(bot)
+    await dp.start_polling(bot, polling_timeout=1)
 
 
 if __name__ == "__main__":
