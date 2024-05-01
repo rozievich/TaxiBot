@@ -43,9 +43,9 @@ class TaxiDB:
         self.con.commit()
     
     def get_top_taxi(self):
-        query = "SELECT * FROM taxis WHERE top = true"
-        self.cur.execute(query)
-        self.cur.fetchall()
+        query = "SELECT * FROM taxis WHERE top = %s"
+        self.cur.execute(query, (True, ))
+        return self.cur.fetchall()
     
     def update_top_taxi(self, _id: int, top: bool):
         query = "UPDATE taxis SET top = %s WHERE id = %s"

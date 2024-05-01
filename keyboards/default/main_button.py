@@ -66,3 +66,17 @@ async def get_all_users_button(taxies: list):
     
     button = ReplyKeyboardMarkup(keyboard=all_users, one_time_keyboard=True, resize_keyboard=True)
     return button
+
+
+async def get_all_top_taxis(taxies: list, top: bool):
+    all_users = []
+    for user in taxies:
+        if user['top'] == top:
+            if user['fullname'] == taxies[-1]['fullname']:
+                all_users.append([KeyboardButton(text=user['fullname'])])
+            else:
+                all_users.append([KeyboardButton(text=user['fullname'])])
+    else:
+        all_users.append([KeyboardButton(text="❌")])
+    button = ReplyKeyboardMarkup(keyboard=all_users, one_time_keyboard=True, resize_keyboard=True)
+    return button

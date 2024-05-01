@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.fsm.context import FSMContext
 
 from data.config import ADMINS
-from keyboards.default.main_button import admin_button, get_all_users_button
+from keyboards.default.main_button import admin_button, get_all_top_taxis
 from states.admin_states import UpdateTopState, UpdateBackTopState
 from utils.db_api.orm import TaxiDB
 from .first_commans import mainrouter
@@ -16,7 +16,7 @@ async def update_top_taxi_func(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         users = db.get_taxies()
         if users:
-            await message.answer("Topga chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_users_button(users))
+            await message.answer("Topga chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_top_taxis(users, False))
             await state.set_state(UpdateTopState.fullname)
         else:
             await message.answer("Hozirda tizimda hech qanday taxi yo'q 🛑")
@@ -44,7 +44,7 @@ async def update_top_taxi_func_false(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         users = db.get_taxies()
         if users:
-            await message.answer("Topdan chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_users_button(users))
+            await message.answer("Topdan chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_top_taxis(users, True))
             await state.set_state(UpdateBackTopState.fullname)
         else:
             await message.answer("Hozirda tizimda hech qanday top taxi yo'q 🛑")
