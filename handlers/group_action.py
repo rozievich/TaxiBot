@@ -1,6 +1,7 @@
 from aiogram import Bot, types
-from data.config import FROM_GROUP_ID, TO_GROUP_ID
+from data.config import FROM_GROUP_ID, TO_GROUP_ID, KEYBOARDS
 from .first_commans import mainrouter
+
 
 
 async def forward_message_to_small_group(message: types.Message, bot: Bot):
@@ -11,7 +12,15 @@ async def forward_message_to_small_group(message: types.Message, bot: Bot):
         pass
 
 
+async def message_contains_keyword(message: str):
+    for keyword in KEYBOARDS:
+        if keyword in message:
+            return True
+    return False
+
+
 @mainrouter.message()
 async def handle_big_group_messages(message: types.Message, bot: Bot):
     if message.chat.type == "group":
-        await forward_message_to_small_group(message, bot)
+        if await message_contains_keyword(message=message.text.lower()):
+            await forward_message_to_small_group(message, bot)

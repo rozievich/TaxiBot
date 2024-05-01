@@ -21,7 +21,6 @@ async def all_taxi_get_func(message: types.Message):
 @mainrouter.message(lambda msg: msg.text == "Top Taxilar 🏆")
 async def get_top_taxi_func(message: types.Message):
     all_top_taxi = db.get_top_taxi()
-    print(all_top_taxi)
     if all_top_taxi:
         for taxi in all_top_taxi:
             if not taxi['username']:
