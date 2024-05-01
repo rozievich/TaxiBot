@@ -91,7 +91,10 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             user_info = await state.get_data()
             try:
                 await message.answer_photo(photo=user_info['photo'])
-                db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], message.text, user_info['username'])
+                if message.text != "⛓ O'tkazib yuborish ⛓":
+                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], message.text, user_info['username'])
+                else:
+                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], "", user_info['username'])
             except:
                 await message.answer("Taxini kiritishda noma'lum xatolik yuzaga keldi 😕", reply_markup=admin_button)
             else:
