@@ -5,11 +5,8 @@ from .first_commans import mainrouter
 
 
 async def forward_message_to_small_group(message: types.Message, bot: Bot):
-    try:
-        await bot.forward_message(chat_id=TO_GROUP_ID, from_chat_id=FROM_GROUP_ID, message_id=message.message_id)
-        await message.delete()
-    except:
-        pass
+    await bot.forward_message(chat_id=TO_GROUP_ID, from_chat_id=FROM_GROUP_ID, message_id=message.message_id)
+    await message.delete()
 
 
 async def message_contains_keyword(message: str):
@@ -21,6 +18,6 @@ async def message_contains_keyword(message: str):
 
 @mainrouter.message()
 async def handle_big_group_messages(message: types.Message, bot: Bot):
-    if message.chat.type == "group":
-        if await message_contains_keyword(message=message.text.lower()):
+    if message.chat.type == "supergroup" and message.chat.id == FROM_GROUP_ID:
+        if await message_contains_keyword(message=message.text):
             await forward_message_to_small_group(message, bot)
