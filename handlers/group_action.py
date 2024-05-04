@@ -1,7 +1,6 @@
-from aiogram import Bot, types, F
+from aiogram import Bot, types
 
 from data.config import FROM_GROUP_ID, TO_GROUP_ID, KEYBOARDS
-from keyboards.inline.user_button import button
 from .first_commans import mainrouter
 
 
@@ -18,18 +17,6 @@ async def message_contains_keyword(message: str):
         return False
     else:
         return False
-
-
-@mainrouter.message(F.new_chat_member)
-async def member_joined(message: types.Message):
-    if message.new_chat_members:
-        new_member = message.new_chat_members[0]
-        await message.reply(
-            f"Assalomu alaykum {new_member.full_name} 🤖\n"
-            f"Bizning bot orqali tez va oson taxi toping ✅\n\n"
-            f"Pastdagi ➕ tugmasini bosing va foydalanishni boshlang 🎛",
-            reply_markup=button
-        )
 
 
 @mainrouter.message()
