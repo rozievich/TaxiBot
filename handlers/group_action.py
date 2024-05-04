@@ -22,7 +22,7 @@ async def message_contains_keyword(message: str):
 
 @mainrouter.message(F.new_chat_member)
 async def member_joined(message: types.Message):
-    if message.chat.id == FROM_GROUP_ID and message.new_chat_members:
+    if message.new_chat_members:
         new_member = message.new_chat_members[0]
         await message.reply(
             f"Assalomu alaykum {new_member.full_name} 🤖\n"
