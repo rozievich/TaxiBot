@@ -1,10 +1,11 @@
 from aiogram import types
 
-from .first_commans import mainrouter
 from data.config import ADMINS
 from utils.db_api.orm import TaxiDB
+from .first_commans import mainrouter
 
 db = TaxiDB()
+
 
 @mainrouter.message(lambda msg: msg.text == "Statistika 📊")
 async def get_user_statistic(message: types.Message):

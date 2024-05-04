@@ -1,7 +1,8 @@
 from aiogram import Bot, types, F
-from data.config import FROM_GROUP_ID, TO_GROUP_ID, KEYBOARDS
-from .first_commans import mainrouter
 
+from data.config import FROM_GROUP_ID, TO_GROUP_ID, KEYBOARDS
+from keyboards.inline.user_button import button
+from .first_commans import mainrouter
 
 
 async def forward_message_to_small_group(message: types.Message, bot: Bot):
@@ -23,7 +24,12 @@ async def message_contains_keyword(message: str):
 async def member_joined(message: types.Message):
     if message.chat.id == FROM_GROUP_ID and message.new_chat_members:
         new_member = message.new_chat_members[0]
-        await message.reply(f"Assalomu alaykum {new_member.full_name} 🤖\nBizning bot orqali tez va oson taxi toping ✅\nShunchaki botga kiring va <a href='https://t.me/Namangan_Samarqand_Taxi_bot?start=true'>/start</a> tugmasini bosing 🎛")
+        await message.reply(
+            f"Assalomu alaykum {new_member.full_name} 🤖\n"
+            f"Bizning bot orqali tez va oson taxi toping ✅\n\n"
+            f"Pastdagi ➕ tugmasini bosing va foydalanishni boshlang 🎛",
+            reply_markup=button
+        )
 
 
 @mainrouter.message()
@@ -31,4 +37,3 @@ async def handle_big_group_messages(message: types.Message, bot: Bot):
     if message.chat.type == "supergroup" and message.chat.id == FROM_GROUP_ID:
         if await message_contains_keyword(message=message.text):
             await forward_message_to_small_group(message, bot)
-

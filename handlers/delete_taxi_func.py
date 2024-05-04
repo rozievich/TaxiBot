@@ -1,14 +1,13 @@
 from aiogram import types
 from aiogram.fsm.context import FSMContext
 
-from data.config import ADMINS 
-from states.admin_states import DeleteTaxiState
+from data.config import ADMINS
 from keyboards.default.main_button import admin_button, get_all_users_button
+from states.admin_states import DeleteTaxiState
 from utils.db_api.orm import TaxiDB
 from .first_commans import mainrouter
 
 db = TaxiDB()
-
 
 
 @mainrouter.message(lambda msg: msg.text == "Taxi O'chirish 🚖")
@@ -17,11 +16,12 @@ async def delete_taxi_function_fullname(message: types.Message, state: FSMContex
         users = db.get_taxies()
         if users:
             print(users)
-            await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️", reply_markup=await get_all_users_button(users))
+            await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️",
+                                 reply_markup=await get_all_users_button(users))
             await state.set_state(DeleteTaxiState.fullname)
         else:
             await message.answer("O'chirish uchun taxi topilmadi 🛑")
-    
+
 
 @mainrouter.message(DeleteTaxiState.fullname)
 async def delete_taxi_function_finish(message: types.Message, state: FSMContext):
@@ -36,5 +36,6 @@ async def delete_taxi_function_finish(message: types.Message, state: FSMContext)
                 await message.answer("Taxi muvaffaqiyatli o'chrildi ✅", reply_markup=admin_button)
                 await state.clear()
             else:
-                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖", reply_markup=admin_button)
+                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖",
+                                     reply_markup=admin_button)
                 await state.clear()
