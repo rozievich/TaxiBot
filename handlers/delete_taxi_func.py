@@ -15,7 +15,6 @@ async def delete_taxi_function_fullname(message: types.Message, state: FSMContex
     if message.from_user.id in ADMINS:
         users = db.get_taxies()
         if users:
-            print(users)
             await message.answer("O'chirish kerak bo'lgan Taxining Ism Familiyasini tanlang ⚙️",
                                  reply_markup=await get_all_users_button(users))
             await state.set_state(DeleteTaxiState.fullname)

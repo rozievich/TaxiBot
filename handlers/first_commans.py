@@ -28,7 +28,7 @@ async def start_command(message: types.Message, bot: Bot):
 @mainrouter.message(Command('help'))
 async def help_command(message: types.Message):
     await message.answer(
-        "<b>Namangan Samarqand Taxi</b> Botiga xush kelibsiz 🤖\nBu bot orqali siz ⚙️\nNamangandan Samarqandaga yoki Samarqanddan Namanganga taxi topishingiz mumkin 😊\nHammasi oddiy shunchaki /start bosing va tez va oson taxi toping ✅\n\nAdmin: @UsTa_1333\nSizga shn kabi botlar kerakmi: @rozievich")
+        "<b>Yaypan Toshkent Taxi</b> Botiga xush kelibsiz 🤖\nBu bot orqali siz ⚙️\nYaypandan Toshkentga yoki Toshkentdan Yaypanga taxi topishingiz mumkin 😊\nHammasi oddiy shunchaki /start bosing va tez va oson taxi toping ✅\n\nAdmin: @UsTa_1333\nSizga shn kabi botlar kerakmi: @rozievich")
 
 
 @mainrouter.message(Command('panel'))
