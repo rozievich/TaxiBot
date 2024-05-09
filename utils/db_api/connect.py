@@ -3,7 +3,7 @@ from psycopg2.extras import DictCursor
 
 conn = connect(
     user="postgres",
-    database="yaypan_db",
+    database="taxi_db",
     password="black0613",
     host="localhost",
     port=5432,
