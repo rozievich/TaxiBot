@@ -21,6 +21,6 @@ async def message_contains_keyword(message: str):
 
 @mainrouter.message()
 async def handle_big_group_messages(message: types.Message, bot: Bot):
-    if message.chat.type == "supergroup" and message.chat.id == FROM_GROUP_ID:
+    if message.chat.type == "supergroup" and message.chat.id in FROM_GROUP_ID:
         if await message_contains_keyword(message=message.text):
             await forward_message_to_small_group(message, bot)
