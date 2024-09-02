@@ -5,9 +5,10 @@ from .first_commans import mainrouter
 
 
 async def forward_message_to_small_group(message: types.Message, bot: Bot):
-    await bot.forward_message(chat_id=TO_GROUP_ID, from_chat_id=FROM_GROUP_ID, message_id=message.message_id)
+    msg = message
     await message.delete()
-
+    await bot.send_message(chat_id=TO_GROUP_ID, text=f"<b>Message:</b> {msg.text}\n\n<b>Ism:</b> {msg.from_user.mention_html(msg.from_user.full_name)}\n<b>Username:</b> {msg.from_user.username}\n<b>Guruh:</b> @{msg.chat.username}")
+    await message.answer(f"ASSALOMU ALEYKUM #{msg.from_user.full_name}\nSIZNING ZAKAZINGIZ SHAFYORLAR 🚖 GURUHIGA TUSHDI ✅\nLICHKADA ISHONCHLI SHAFYORLARIMIZ KUTMOQDA❗️\n\nYOKI ADMINGA MUROJAT QILING:\n☎️ +998944403995\n☎️ +998994041819\n\nGRUPPA SIZGA MAQUL BO'LSA DO'STLARIZGA ULASHING.\n@Yaypan_Toshkent_Robot")
 
 async def message_contains_keyword(message: str):
     if message:
