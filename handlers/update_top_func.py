@@ -15,8 +15,7 @@ async def update_top_taxi_func(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         users = db.get_taxies()
         if users:
-            await message.answer("Topga chiqarish kerak bo'lgan taxini tanlang 🏆",
-                                 reply_markup=await get_all_top_taxis(users, False))
+            await message.answer("Topga chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_top_taxis(users, False))
             await state.set_state(UpdateTopState.fullname)
         else:
             await message.answer("Hozirda tizimda hech qanday taxi yo'q 🛑")
@@ -35,8 +34,7 @@ async def update_top_taxi_fullname(message: types.Message, state: FSMContext):
                 await message.answer(f"{message.text} - endi top ro'yhatida 🏆", reply_markup=admin_button)
                 await state.clear()
             else:
-                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖",
-                                     reply_markup=admin_button)
+                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖", reply_markup=admin_button)
                 await state.clear()
 
 
@@ -45,8 +43,7 @@ async def update_top_taxi_func_false(message: types.Message, state: FSMContext):
     if message.from_user.id in ADMINS:
         users = db.get_taxies()
         if users:
-            await message.answer("Topdan chiqarish kerak bo'lgan taxini tanlang 🏆",
-                                 reply_markup=await get_all_top_taxis(users, True))
+            await message.answer("Topdan chiqarish kerak bo'lgan taxini tanlang 🏆", reply_markup=await get_all_top_taxis(users, True))
             await state.set_state(UpdateBackTopState.fullname)
         else:
             await message.answer("Hozirda tizimda hech qanday top taxi yo'q 🛑")
@@ -65,6 +62,5 @@ async def update_top_taxi_func_fullname_false(message: types.Message, state: FSM
                 await message.answer(f"{message.text} - endi top ro'yhatida emas 🏆", reply_markup=admin_button)
                 await state.clear()
             else:
-                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖",
-                                     reply_markup=admin_button)
+                await message.answer("Bunday user tizimda ro'yhatdan o'tmagan 🤷‍♂️\nIltimos qayta urunib ko'ring 🤖", reply_markup=admin_button)
                 await state.clear()

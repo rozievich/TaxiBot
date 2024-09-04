@@ -28,8 +28,7 @@ async def add_taxi_function_phone(message: types.Message, state: FSMContext):
             await state.clear()
         else:
             await state.update_data(fullname=message.text)
-            await message.answer("Taxining Telefon raqamini kiriting ✒️\nMisol uchun: +998901234567",
-                                 reply_markup=exit_button)
+            await message.answer("Taxining Telefon raqamini kiriting ✒️\nMisol uchun: +998901234567", reply_markup=exit_button)
             await state.set_state(AddTaxiState.phone)
 
 
@@ -57,9 +56,7 @@ async def add_taxi_function_username(message: types.Message, state: FSMContext):
         else:
             try:
                 await state.update_data(photo=message.photo[0].file_id)
-                await message.answer(
-                    "Taxining Telegram Usernameni kiriting (Ixtiyoriy) 🔗\nMisol uchun: <b>@username</b>",
-                    reply_markup=exit_and_skip_button)
+                await message.answer("Taxining Telegram Usernameni kiriting (Ixtiyoriy) 🔗\nMisol uchun: <b>@username</b>", reply_markup=exit_and_skip_button)
                 await state.set_state(AddTaxiState.username)
             except:
                 await message.answer("Iltimos Rasm kiritayotganingizga ishonch hosil qiling 🚫")
@@ -79,8 +76,7 @@ async def add_taxi_function_description(message: types.Message, state: FSMContex
         else:
             if re.match(r"^@[A-Za-z0-9_]{5,32}$", message.text):
                 await state.update_data(username=message.text)
-                await message.answer("Taxining xususiyatlarini kiriting (Ixtiyoriy) ⚙️",
-                                     reply_markup=exit_and_skip_button)
+                await message.answer("Taxining xususiyatlarini kiriting (Ixtiyoriy) ⚙️", reply_markup=exit_and_skip_button)
                 await state.set_state(AddTaxiState.description)
             else:
                 await message.answer("Iltimos usernameni to'gri kiriting 🆘")
@@ -97,11 +93,9 @@ async def add_taxi_function_finish(message: types.Message, state: FSMContext):
             try:
                 await message.answer_photo(photo=user_info['photo'])
                 if message.text != "⛓ O'tkazib yuborish ⛓":
-                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], message.text,
-                                   user_info['username'])
+                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], message.text, user_info['username'])
                 else:
-                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], "",
-                                   user_info['username'])
+                    db.create_taxi(user_info['fullname'], user_info['phone'], user_info['photo'], "", user_info['username'])
             except:
                 await message.answer("Taxini kiritishda noma'lum xatolik yuzaga keldi 😕", reply_markup=admin_button)
             else:
