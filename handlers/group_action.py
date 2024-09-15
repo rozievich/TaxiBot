@@ -7,10 +7,10 @@ from utils.misc import has_phone_number
 
 async def forward_message_to_small_group(msg: types.Message, bot: Bot):
     await bot.send_message(chat_id=TO_GROUP_ID, text=f"<b>Message:</b> {msg.text}\n\n<b>Ism:</b> {msg.from_user.mention_html(msg.from_user.full_name)}\n<b>Username:</b> @{msg.from_user.username}\n<b>Guruh:</b> https://t.me/{msg.chat.username}")
-    if has_phone_number(msg.text):
-        await bot.send_message(chat_id=msg.chat.id, text=f"Telefon raqamingizni qoldirganingiz uchun rahmat #{msg.from_user.full_name}\nSizning zakazingiz shafyorlar 🚖 guruhiga tushdi ✅\nLichkada ishonchli shafyorlarimiz kutmoqda❗️\n\nGuruh sizga maqul bo'lsa do'stlaringizga ulashing\n@{msg.chat.username}")
-    else:    
-        await bot.send_message(chat_id=msg.chat.id, text=f"Assalomu alaykum #{msg.from_user.full_name}\nSizning zakazingiz shafyorlar 🚖 guruhiga tushdi ✅\nLichkada ishonchli shafyorlarimiz kutmoqda❗️\n\nAgar oson buyurtma bermoqchi bo'lsangiz shunchaki telefon raqmingizni yozib qoldiring ✍️\n\nGuruh sizga maqul bo'lsa do'stlaringizga ulashing\n@{msg.chat.username}")
+    if await has_phone_number(msg.text):
+        await bot.send_message(chat_id=msg.chat.id, text=f"<b>{msg.from_user.full_name}</b>\nSizning telefon raqamingiz qabul qilindi ✅\nTez orqada sizga aloqaga chiqishadi 📲\n\nGuruh sizga maqul bo'lsa do'stlaringizga ulashing: \n@{msg.chat.username}")
+    else:
+        await bot.send_message(chat_id=msg.chat.id, text=f"Assalomu alaykum <b>{msg.from_user.full_name}</b>\nSizning zakazingiz Shafyorlar guruhiga tushdi ✅\n\nTelefon raqamingizni quyidagi namunada qoldiring❗️\n📞 931348100\n📞 +998937719449\n\nGuruh sizga maqul bo'lsa do'stlaringizga ulashing: \n@{msg.chat.username}")
 
 
 @mainrouter.message()
