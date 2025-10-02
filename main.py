@@ -22,18 +22,16 @@ async def member_joined(message: types.Message):
     if message.new_chat_members:
         new_member = message.new_chat_members[0]
         await message.reply(
-            f"Assalomu alaykum {new_member.full_name} 🤖\n"
-            f"Bizning bot orqali tez va oson taxi toping ✅\n\n"
-            f"Pastdagi ➕ tugmasini bosing va foydalanishni boshlang 🎛",
+            f"Assalom aleykum {new_member.full_name} 🤖\n\n"
+            f"Sizning xabaringiz xaydovchilar guruhiga yuborildi  👇\n\n"
+            f"Bot orqali xam tez va oson taksi zakas qilishingiz mumkun👇",
             reply_markup=button
         )
 
 
 async def main() -> None:
     dp.message.register(member_joined, F.new_chat_member)
-    dp.include_routers(
-        mainrouter
-    )
+    dp.include_router(mainrouter)
     dp.startup.register(start_up)
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     await dp.start_polling(bot, polling_timeout=1)
